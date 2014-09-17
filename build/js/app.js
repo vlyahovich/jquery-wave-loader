@@ -120,14 +120,19 @@ $(function () {
 
 		init: function () {
 			var canvas = $('<canvas></canvas>'),
+					counter = $('<div></div>', {
+						'class': 'counter'
+					}),
 					STEPS = 20;
 
 			canvas[0].width = this._width;
 			canvas[0].height = this._height;
 
 			this._ctx = canvas[0].getContext('2d');
+			this._counter = counter;
 
 			this.$el.append(canvas);
+			this.$el.append(counter);
 
 			this._frontOscillator = new Oscillator();
 			this._backOscillator = new Oscillator();
@@ -148,6 +153,7 @@ $(function () {
 
 			this._step = Math.ceil(this._width / (STEPS - 1));
 
+			this._writeProgress(this.options.progress);
 			this.animate();
 		},
 
@@ -177,6 +183,10 @@ $(function () {
 			this._ctx.lineTo(0, this._height - pts[0]);
 
 			this._ctx.fill();
+		},
+
+		_writeProgress: function (progress) {
+			this._counter.text(progress + '%');
 		},
 
 		animate: function () {
@@ -211,6 +221,8 @@ $(function () {
 
 			this._frontOscillator.horizon = progress;
 			this._backOscillator.horizon = progress;
+
+			this._writeProgress(progress);
 		},
 
 		destroy: function () {

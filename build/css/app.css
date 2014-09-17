@@ -442,3 +442,14 @@ body {
 	position: relative;
 	overflow: hidden;
 }
+
+.counter {
+	width: 100%;
+	line-height: 100px;
+	font-size: 24px;
+	color: #000000;
+	text-align: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
