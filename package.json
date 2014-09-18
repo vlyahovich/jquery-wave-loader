@@ -2,6 +2,7 @@
 	"name": "jquery-wave-loader",
 	"devDependencies": {
 		"gulp": "3.8.1",
+		"gulp-rename": "1.2.0",
 		"gulp-declare": "0.2.0",
 		"gulp-define-module": "0.1.1",
 		"gulp-handlebars": "2.1.0",

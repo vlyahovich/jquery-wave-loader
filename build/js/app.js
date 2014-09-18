@@ -7,7 +7,7 @@ $(function () {
 	}, 2000);
 });
 /**
- * Jquery wave loader plugin.
+ * Jquery wave loader plugin. Version 0.0.4
  * Usage: $('.loader').loader(options) on <div class="loader"></div>
  *
  * Options:
@@ -29,6 +29,47 @@ $(function () {
 
 (function ($, window, document, undefined) {
 	'use strict';
+
+	/**
+	 * Oscillator utility class for sine wave generation
+	 * @param variation
+	 * @param max
+	 * @param speed
+	 * @param horizon
+	 * @constructor
+	 */
+	function Oscillator(variation, max, speed, horizon) {
+		this.variation = variation || 0.1;
+		this.max = max || 5;
+		this.speed = speed || 0.02;
+		this.horizon = horizon || 0;
+
+		this._pt = 0;
+		this._max = this._getMax();
+	}
+
+	Oscillator.prototype = {
+
+		/**
+		 * Get next point in sine amplitude
+		 * @returns {*} amplitude
+		 */
+		getAmp: function () {
+			this._pt += this.speed;
+
+			if (this._pt >= 2.0) {
+				this._pt = 0;
+				this._max = this._getMax();
+			}
+
+			return (this._max * Math.sin(this._pt * Math.PI)) + this.horizon;
+		},
+
+		_getMax: function () {
+			return Math.random() * this.max * this.variation + this.max * (1 - this.variation);
+		}
+
+	};
 
 	var pluginName = "loader",
 			defaults = {
@@ -82,47 +123,6 @@ $(function () {
 
 				return caf;
 			}());
-
-	/**
-	 * Oscillator class for sine wave generation
-	 * @param variation
-	 * @param max
-	 * @param speed
-	 * @param horizon
-	 * @constructor
-	 */
-	function Oscillator(variation, max, speed, horizon) {
-		this.variation = variation || 0.1;
-		this.max = max || 5;
-		this.speed = speed || 0.02;
-		this.horizon = horizon || 0;
-
-		this._pt = 0;
-		this._max = this._getMax();
-	}
-
-	$.extend(Oscillator.prototype, {
-
-		/**
-		 * Get next point in sine amplitude
-		 * @returns {*} amplitude
-		 */
-		getAmp: function () {
-			this._pt += this.speed;
-
-			if (this._pt >= 2.0) {
-				this._pt = 0;
-				this._max = this._getMax();
-			}
-
-			return (this._max * Math.sin(this._pt * Math.PI)) + this.horizon;
-		},
-
-		_getMax: function () {
-			return Math.random() * this.max * this.variation + this.max * (1 - this.variation);
-		}
-
-	});
 
 	function Plugin(element, options) {
 		this.element = element;

@@ -15,3 +15,5 @@ Building and running
 
 Now you can simply build app by `gulp build` or `gulp build-prod` for production.
 If you want to run server with livereload and watch for files change do `gulp watch`.
+
+Minified and development versions of plugin is under dist folder

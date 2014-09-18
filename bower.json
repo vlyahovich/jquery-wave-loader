@@ -1,6 +1,6 @@
 {
 	"name": "jquery-wave-loader",
-	"version": "0.0.1",
+	"version": "0.0.4",
 	"main": "build/js/app.js",
 	"ignore": [
 		"**/.*",
