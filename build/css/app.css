@@ -431,16 +431,21 @@ body {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	background: #5890AD;
 }
 
 .loader {
 	width: 100px;
 	height: 100px;
 	background: #ffffff;
-	border: 10px solid #0d283b;
+	border: 5px solid #0d283b;
 	border-radius: 50%;
-	position: relative;
 	overflow: hidden;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -50px;
+	margin-right: -50px;
 }
 
 .counter {

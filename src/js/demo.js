@@ -1,8 +1,8 @@
 $(function () {
 	$('.loader').loader();
 
-	var progr = 1;
+	var progr = 0;
 	setInterval(function () {
 		$('.loader').loader('setProgress', ++progr);
-	}, 100);
+	}, 2000);
 });

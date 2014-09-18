@@ -1,11 +1,32 @@
 $(function () {
 	$('.loader').loader();
 
-	var progr = 1;
+	var progr = 0;
 	setInterval(function () {
 		$('.loader').loader('setProgress', ++progr);
-	}, 100);
+	}, 2000);
 });
+/**
+ * Jquery wave loader plugin.
+ * Usage: $('.loader').loader(options) on <div class="loader"></div>
+ *
+ * Options:
+ *   progress - initial progress
+ *   frontSpeed - speed of front wave
+ *   frontColor - color of front wave
+ *   frontOpacity - opacity of front wave
+ *   backSpeed - speed of back wave
+ *   backColor - color of back wave
+ *   backOpacity - opacity of back wave
+ *
+ * Methods:
+ *   init - init plugin
+ *   setProgress - set progress to value from 0 to 100
+ *   destroy - destroy plugin
+ *
+ * Methods usage example: $('.loader').loader('setProgress', progress);
+ */
+
 (function ($, window, document, undefined) {
 	'use strict';
 
@@ -131,6 +152,7 @@ $(function () {
 			this._ctx = canvas[0].getContext('2d');
 			this._counter = counter;
 
+			this.$el.empty();
 			this.$el.append(canvas);
 			this.$el.append(counter);
 
@@ -154,7 +176,7 @@ $(function () {
 			this._step = Math.ceil(this._width / (STEPS - 1));
 
 			this._writeProgress(this.options.progress);
-			this.animate();
+			this._animate();
 		},
 
 		_fillOscillatorPts: function (pts, oscillator) {
@@ -189,7 +211,7 @@ $(function () {
 			this._counter.text(progress + '%');
 		},
 
-		animate: function () {
+		_animate: function () {
 			// Shift points
 			this._shiftPts(this._frontOscillatorPts);
 			this._shiftPts(this._backOscillatorPts);
@@ -209,7 +231,7 @@ $(function () {
 			this._ctx.fillStyle = this.options.frontColor;
 			this._draw(this._frontOscillatorPts);
 
-			this._animateFrame = requestAnimationFrame($.proxy(this.animate, this));
+			this._animateFrame = requestAnimationFrame($.proxy(this._animate, this));
 		},
 
 		setProgress: function (progress) {
@@ -219,14 +241,15 @@ $(function () {
 				progress = 100;
 			}
 
-			this._frontOscillator.horizon = progress;
-			this._backOscillator.horizon = progress;
+			this._frontOscillator.horizon = (this._height / 100) * progress;
+			this._backOscillator.horizon = (this._height / 100) * progress;
 
 			this._writeProgress(progress);
 		},
 
 		destroy: function () {
 			cancelAnimationFrame(this._animateFrame);
+			this.$el.empty();
 		}
 	};
 
