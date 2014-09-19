@@ -66,6 +66,7 @@
 	var pluginName = "loader",
 			defaults = {
 				progress: 0,
+				useRequestAnimationFrame: true,
 				frontSpeed: 0.021,
 				frontColor: 'green',
 				frontOpacity: 0.5,
@@ -223,7 +224,11 @@
 			this._ctx.fillStyle = this.options.frontColor;
 			this._draw(this._frontOscillatorPts);
 
-			this._animateFrame = requestAnimationFrame($.proxy(this._animate, this));
+			if (this.options.useRequestAnimationFrame) {
+				this._animateFrame = requestAnimationFrame($.proxy(this._animate, this));
+			} else {
+				this._animateFrame = setTimeout($.proxy(this._animate, this), 16);
+			}
 		},
 
 		setProgress: function (progress) {
@@ -240,7 +245,13 @@
 		},
 
 		destroy: function () {
-			cancelAnimationFrame(this._animateFrame);
+			if (this.options.useRequestAnimationFrame) {
+				cancelAnimationFrame(this._animateFrame);
+			} else {
+				clearTimeout(this._animateFrame);
+			}
+
+
 			this.$el.empty();
 		}
 	};
