@@ -12,6 +12,7 @@ $(function () {
  *
  * Options:
  *   progress - initial progress
+ *   useRequestAnimationFrame - use requestAnimationFrame or setTimeout for animation loop
  *   frontSpeed - speed of front wave
  *   frontColor - color of front wave
  *   frontOpacity - opacity of front wave
