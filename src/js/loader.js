@@ -67,58 +67,58 @@
 	};
 
 	var pluginName = "loader",
-			defaults = {
-				progress: 0,
-				useRequestAnimationFrame: true,
-				frontSpeed: 0.021,
-				frontColor: 'green',
-				frontOpacity: 0.5,
-				backSpeed: 0.025,
-				backColor: 'green',
-				backOpacity: 0.2
-			},
-			requestAnimationFrame = (function () {
-				var vendors = ['ms', 'moz', 'webkit', 'o'],
-						raf = null,
-						lastTime = 0;
+		defaults = {
+			progress: 0,
+			useRequestAnimationFrame: true,
+			frontSpeed: 0.021,
+			frontColor: 'green',
+			frontOpacity: 0.5,
+			backSpeed: 0.025,
+			backColor: 'green',
+			backOpacity: 0.2
+		},
+		requestAnimationFrame = (function () {
+			var vendors = ['ms', 'moz', 'webkit', 'o'],
+					raf = null,
+					lastTime = 0;
 
-				for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-					raf = window[vendors[x] + 'RequestAnimationFrame'];
-				}
+			for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+				raf = window[vendors[x] + 'RequestAnimationFrame'];
+			}
 
-				if (!raf) {
-					raf = function (callback, element) {
-						var currTime = new Date().getTime(),
-								timeToCall = Math.max(0, 16 - (currTime - lastTime)),
-								id = window.setTimeout(function () {
-											callback(currTime + timeToCall);
-										},
-										timeToCall);
+			if (!raf) {
+				raf = function (callback, element) {
+					var currTime = new Date().getTime(),
+							timeToCall = Math.max(0, 16 - (currTime - lastTime)),
+							id = window.setTimeout(function () {
+										callback(currTime + timeToCall);
+									},
+									timeToCall);
 
-						lastTime = currTime + timeToCall;
+					lastTime = currTime + timeToCall;
 
-						return id;
-					};
-				}
+					return id;
+				};
+			}
 
-				return raf;
-			}()),
-			cancelAnimationFrame = (function () {
-				var vendors = ['ms', 'moz', 'webkit', 'o'],
-						caf = null;
+			return raf;
+		}()),
+		cancelAnimationFrame = (function () {
+			var vendors = ['ms', 'moz', 'webkit', 'o'],
+					caf = null;
 
-				for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-					caf = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
-				}
+			for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+				caf = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+			}
 
-				if (!caf) {
-					caf = function (id) {
-						clearTimeout(id);
-					};
-				}
+			if (!caf) {
+				caf = function (id) {
+					clearTimeout(id);
+				};
+			}
 
-				return caf;
-			}());
+			return caf;
+		}());
 
 	function Plugin(element, options) {
 		this.element = element;
