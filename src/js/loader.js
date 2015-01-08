@@ -11,6 +11,8 @@
  *   backSpeed - speed of back wave
  *   backColor - color of back wave
  *   backOpacity - opacity of back wave
+ *   width - optional width
+ *   height - optional height
  *
  * Methods:
  *   init - init plugin
@@ -124,9 +126,16 @@
 		this.options = $.extend({}, defaults, options);
 		this._defaults = defaults;
 		this._name = pluginName;
+		
+		if (this.options.width) {
+		    this.$el.width(this.options.width);
+		}
+		if (this.options.height) {
+		    this.$el.height(this.options.height);
+		}
 
-		this._width = this.$el.width();
-		this._height = this.$el.height();
+		this._width = this.options.width || this.$el.width();
+		this._height = this.options.height || this.$el.height();
 
 		this.init();
 	}
